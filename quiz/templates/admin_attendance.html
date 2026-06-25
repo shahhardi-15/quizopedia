@@ -1,0 +1,70 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block title %}Attendance — Quiz Academy{% endblock %}
+{% block page_title %}Attendance{% endblock %}
+{% block nav_attendance %}active{% endblock %}
+
+{% block content %}
+<h1 class="page-heading">Student Attendance</h1>
+<p class="page-subheading">Track student login activity and quiz participation.</p>
+
+<div class="card">
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Student Name</th>
+          <th>Enrollment No</th>
+          <th>Last Login</th>
+          <th>Quizzes Taken</th>
+          <th>Status</th>
+          <th class="td-center">Download</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in students %}
+        <tr>
+          <td class="text-muted">{{ forloop.counter }}</td>
+          <td class="td-primary">{{ s.first_name|default:s.username }}</td>
+          <td>{{ s.enrollment_no|default:"—" }}</td>
+          <td>
+            {% if s.last_login %}
+              {{ s.last_login|date:"d M Y, h:i A" }}
+            {% else %}
+              <span class="text-muted">Never</span>
+            {% endif %}
+          </td>
+          <td>
+            <span class="badge badge-info">{{ s.quiz_count }}</span>
+          </td>
+          <td>
+            {% if s.last_login %}
+              <span class="badge badge-success">Active</span>
+            {% else %}
+              <span class="badge badge-warning">Inactive</span>
+            {% endif %}
+          </td>
+          <td class="td-center">
+            <a href="{% url 'download_report' s.id %}" class="btn btn-outline btn-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              CSV
+            </a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="7">
+            <div class="empty-state">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138"/></svg>
+              <h3>No Students Found</h3>
+              <p>No student accounts exist yet.</p>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

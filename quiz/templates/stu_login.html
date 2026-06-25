@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Login — Quiz Academy</title>
+  <link rel="stylesheet" href="{% static 'css/demo.css' %}">
+</head>
+<body class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <img src="{% static 'images/logo.png' %}" alt="Quiz Academy">
+    </div>
+    <h1 class="auth-heading">Student Portal</h1>
+    <p class="auth-subheading">Welcome back! Sign in with your enrollment number.</p>
+
+    {% if msg %}
+    <div class="alert alert-danger">{{ msg }}</div>
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <label class="form-label" for="enroll_no">Enrollment Number</label>
+        <input class="form-input" type="text" id="enroll_no" name="enroll_no" placeholder="e.g. ENR2026001" required autofocus>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input class="form-input" type="password" id="password" name="password" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full" style="margin-top:8px;">Sign In</button>
+    </form>
+
+    <div class="auth-divider" style="margin-top:24px;">
+      Admin? <a href="{% url 'sign1' %}" class="auth-link">Admin Login</a>
+    </div>
+  </div>
+</body>
+</html>
