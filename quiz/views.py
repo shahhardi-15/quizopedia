@@ -242,6 +242,40 @@ def add_student(request):
 
     return render(request, 'Add_student.html', {'s': msg, 'msg_type': msg_type})
 
+def bulk_import_students(request):
+    if request.user.user_type != 'admin':
+        return redirect('sign1')
+    
+    msg = ''
+    msg_type = 'danger'
+    
+    if request.method == 'POST' and request.FILES.get('csv_file'):
+        import csv, io
+        csv_file = request.FILES['csv_file']
+        decoded = csv_file.read().decode('utf-8')
+        reader = csv.DictReader(io.StringIO(decoded))
+        success, errors = 0, []
+        for row in reader:
+            try:
+                if not CustomUser.objects.filter(email=row['email']).exists():
+                    CustomUser.objects.create_user(
+                        username=row['enrollment_no'],
+                        email=row['email'],
+                        password=row['password'],
+                        user_type='student',
+                        enrollment_no=row['enrollment_no'],
+                        first_name=row['name'],
+                        branch=row.get('branch', ''),
+                    )
+                    success += 1
+            except Exception as e:
+                errors.append(str(e))
+        msg = f"{success} students imported."
+        if errors:
+            msg += f" {len(errors)} failed."
+        msg_type = 'success'
+    
+    return render(request, 'bulk_import.html', {'msg': msg, 'msg_type': msg_type})
 
 @login_required(login_url='sign1')
 def admin_student_detail(request, student_id):

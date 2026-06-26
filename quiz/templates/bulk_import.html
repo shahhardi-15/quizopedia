@@ -1,0 +1,18 @@
+{% extends 'admin_base.html' %} {% block content %}
+<div class="container mt-4">
+  <h2>Bulk Import Students</h2>
+  {% if msg %}
+  <div class="alert alert-{{ msg_type }}">{{ msg }}</div>
+  {% endif %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label>Upload CSV File</label>
+      <input type="file" name="csv_file" accept=".csv" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Import</button>
+  </form>
+  <hr />
+  <p>CSV format: <code>name, email, password, enrollment_no, branch</code></p>
+</div>
+{% endblock %}
