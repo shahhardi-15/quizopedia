@@ -1022,13 +1022,21 @@ ol {
   color: var(--primary);
 }
 
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+}
+
 @media (max-width: 768px) {
   .hamburger {
     display: flex;
     align-items: center;
     justify-content: center;
   }
-}
+
   .sidebar {
     display: flex !important;
     position: fixed;
@@ -1038,10 +1046,12 @@ ol {
     transition: left 0.3s ease;
     z-index: 200;
   }
+
   .sidebar.open {
     left: 0;
   }
+
   .sidebar-overlay.open {
     display: block;
   }
-}
+}s
