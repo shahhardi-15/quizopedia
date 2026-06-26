@@ -278,103 +278,95 @@ def download_report(request, student_id):
     if request.user.user_type != 'admin':
         return redirect('sign1')
 
+    from io import BytesIO
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib import colors
+    from reportlab.lib.styles import ParagraphStyle
+    from reportlab.lib.units import cm
+    from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+    from reportlab.lib.enums import TA_CENTER
+
     student = get_object_or_404(CustomUser, id=student_id, user_type='student')
     attempts = QuizAttempt.objects.filter(
         student=student, is_completed=True
     ).select_related('quiz').order_by('-start_time')
 
-    from io import BytesIO
-from reportlab.lib.pagesizes import A4
-from reportlab.lib import colors
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.units import cm
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
-from reportlab.lib.enums import TA_CENTER, TA_LEFT
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=A4, rightMargin=2*cm, leftMargin=2*cm, topMargin=2*cm, bottomMargin=2*cm)
+    elements = []
 
-buffer = BytesIO()
-doc = SimpleDocTemplate(buffer, pagesize=A4, rightMargin=2*cm, leftMargin=2*cm, topMargin=2*cm, bottomMargin=2*cm)
+    title_style = ParagraphStyle('title', fontSize=20, alignment=TA_CENTER, textColor=colors.HexColor('#2563EB'), spaceAfter=6, fontName='Helvetica-Bold')
+    elements.append(Paragraph("Quizopedia", title_style))
 
-styles = getSampleStyleSheet()
-elements = []
+    sub_title_style = ParagraphStyle('subtitle', fontSize=11, alignment=TA_CENTER, textColor=colors.grey, spaceAfter=16)
+    elements.append(Paragraph("Student Performance Report", sub_title_style))
 
-# Title
-title_style = ParagraphStyle('title', fontSize=20, alignment=TA_CENTER, textColor=colors.HexColor('#2563EB'), spaceAfter=6, fontName='Helvetica-Bold')
-elements.append(Paragraph("Quizopedia", title_style))
+    student_name = f"{student.first_name} {student.last_name}".strip() or student.username
+    info_data = [
+        ["Student Name", student_name, "Enrollment No", student.enrollment_no or "—"],
+        ["Branch", student.branch or "—", "CGPA", str(student.cgpa)],
+        ["Attendance", f"{student.attendance}%", "Total Quizzes", str(attempts.count())],
+    ]
+    info_table = Table(info_data, colWidths=[4*cm, 6*cm, 4*cm, 3*cm])
+    info_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#EFF6FF')),
+        ('BACKGROUND', (2, 0), (2, -1), colors.HexColor('#EFF6FF')),
+        ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor('#1E40AF')),
+        ('TEXTCOLOR', (2, 0), (2, -1), colors.HexColor('#1E40AF')),
+        ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
+        ('FONTNAME', (2, 0), (2, -1), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, -1), 9),
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#BFDBFE')),
+        ('ROWBACKGROUNDS', (0, 0), (-1, -1), [colors.white, colors.HexColor('#F8FAFF')]),
+        ('PADDING', (0, 0), (-1, -1), 6),
+    ]))
+    elements.append(info_table)
+    elements.append(Spacer(1, 0.5*cm))
 
-sub_title_style = ParagraphStyle('subtitle', fontSize=11, alignment=TA_CENTER, textColor=colors.grey, spaceAfter=16)
-elements.append(Paragraph("Student Performance Report", sub_title_style))
+    section_style = ParagraphStyle('section', fontSize=12, textColor=colors.HexColor('#1E40AF'), fontName='Helvetica-Bold', spaceBefore=8, spaceAfter=6)
+    elements.append(Paragraph("Quiz Attempt History", section_style))
 
-# Student Info Table
-student_name = f"{student.first_name} {student.last_name}".strip() or student.username
-info_data = [
-    ["Student Name", student_name, "Enrollment No", student.enrollment_no or "—"],
-    ["Branch", student.branch or "—", "CGPA", str(student.cgpa)],
-    ["Attendance", f"{student.attendance}%", "Total Quizzes", str(attempts.count())],
-]
-info_table = Table(info_data, colWidths=[4*cm, 6*cm, 4*cm, 3*cm])
-info_table.setStyle(TableStyle([
-    ('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#EFF6FF')),
-    ('BACKGROUND', (2, 0), (2, -1), colors.HexColor('#EFF6FF')),
-    ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor('#1E40AF')),
-    ('TEXTCOLOR', (2, 0), (2, -1), colors.HexColor('#1E40AF')),
-    ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
-    ('FONTNAME', (2, 0), (2, -1), 'Helvetica-Bold'),
-    ('FONTSIZE', (0, 0), (-1, -1), 9),
-    ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#BFDBFE')),
-    ('ROWBACKGROUNDS', (0, 0), (-1, -1), [colors.white, colors.HexColor('#F8FAFF')]),
-    ('PADDING', (0, 0), (-1, -1), 6),
-]))
-elements.append(info_table)
-elements.append(Spacer(1, 0.5*cm))
+    headers = ['#', 'Quiz Title', 'Score', 'Total', '%', 'Grade', 'Date', 'Tab Switches']
+    table_data = [headers]
+    for i, attempt in enumerate(attempts, 1):
+        table_data.append([
+            str(i),
+            attempt.quiz.title,
+            str(attempt.score),
+            str(attempt.total_marks),
+            f"{attempt.percentage}%",
+            attempt.grade,
+            attempt.start_time.strftime('%d %b %Y'),
+            str(attempt.tab_switches),
+        ])
 
-# Section heading
-section_style = ParagraphStyle('section', fontSize=12, textColor=colors.HexColor('#1E40AF'), fontName='Helvetica-Bold', spaceBefore=8, spaceAfter=6)
-elements.append(Paragraph("Quiz Attempt History", section_style))
+    col_widths = [1*cm, 5.5*cm, 1.5*cm, 1.5*cm, 1.5*cm, 1.5*cm, 2.5*cm, 2*cm]
+    attempts_table = Table(table_data, colWidths=col_widths, repeatRows=1)
+    attempts_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#2563EB')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, -1), 8),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('ALIGN', (1, 1), (1, -1), 'LEFT'),
+        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#F0F7FF')]),
+        ('GRID', (0, 0), (-1, -1), 0.4, colors.HexColor('#BFDBFE')),
+        ('PADDING', (0, 0), (-1, -1), 5),
+    ]))
+    elements.append(attempts_table)
+    elements.append(Spacer(1, 0.5*cm))
 
-# Attempts Table
-headers = ['#', 'Quiz Title', 'Score', 'Total', '%', 'Grade', 'Date', 'Tab Switches']
-table_data = [headers]
-for i, attempt in enumerate(attempts, 1):
-    table_data.append([
-        str(i),
-        attempt.quiz.title,
-        str(attempt.score),
-        str(attempt.total_marks),
-        f"{attempt.percentage}%",
-        attempt.grade,
-        attempt.start_time.strftime('%d %b %Y'),
-        str(attempt.tab_switches),
-    ])
+    avg = student.average_score_percent
+    summary_style = ParagraphStyle('summary', fontSize=9, textColor=colors.grey, alignment=TA_CENTER)
+    elements.append(Paragraph(f"Average Score: {avg}%  |  Generated by Quizopedia", summary_style))
 
-col_widths = [1*cm, 5.5*cm, 1.5*cm, 1.5*cm, 1.5*cm, 1.5*cm, 2.5*cm, 2*cm]
-attempts_table = Table(table_data, colWidths=col_widths, repeatRows=1)
-attempts_table.setStyle(TableStyle([
-    ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#2563EB')),
-    ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
-    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-    ('FONTSIZE', (0, 0), (-1, -1), 8),
-    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-    ('ALIGN', (1, 1), (1, -1), 'LEFT'),
-    ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#F0F7FF')]),
-    ('GRID', (0, 0), (-1, -1), 0.4, colors.HexColor('#BFDBFE')),
-    ('PADDING', (0, 0), (-1, -1), 5),
-]))
-elements.append(attempts_table)
+    doc.build(elements)
+    buffer.seek(0)
 
-# Summary
-elements.append(Spacer(1, 0.5*cm))
-avg = student.average_score_percent
-summary_style = ParagraphStyle('summary', fontSize=9, textColor=colors.grey, alignment=TA_CENTER)
-elements.append(Paragraph(f"Average Score: {avg}%  |  Generated by Quizopedia", summary_style))
-
-doc.build(elements)
-buffer.seek(0)
-
-filename = f"{student_name}_report.pdf"
-response = HttpResponse(buffer, content_type='application/pdf')
-response['Content-Disposition'] = f'attachment; filename="{filename}"'
-return response
-
+    filename = f"{student_name}_report.pdf"
+    response = HttpResponse(buffer, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    return responses
 # ============================================================
 # ADMIN QUIZ MANAGEMENT
 # ============================================================
