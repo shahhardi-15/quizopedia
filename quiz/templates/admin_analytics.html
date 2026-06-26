@@ -1,43 +1,163 @@
-{% extends 'admin_base.html' %}
-{% block title %}Analytics — Quiz Academy{% endblock %}
-{% block page_title %}Analytics Dashboard{% endblock %}
-{% block nav_analytics %}active{% endblock %}
-
-{% block content %}
+{% extends 'admin_base.html' %} {% block title %}Analytics – Quiz Academy{%
+endblock %} {% block page_title %}Analytics Dashboard{% endblock %} {% block
+nav_analytics %}active{% endblock %} {% block content %}
 <h1 class="page-heading">Analytics Dashboard</h1>
-<p class="page-subheading">Performance overview across all students and quizzes.</p>
+<p class="page-subheading">
+  Performance overview across all students and quizzes.
+</p>
 
 <!-- STAT CARDS -->
 <div class="stats-grid">
   <div class="stat-card">
     <div class="stat-icon primary">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
+        />
+      </svg>
     </div>
-    <div class="stat-info"><h3>Total Students</h3><div class="stat-value">{{ total_students }}</div></div>
+    <div class="stat-info">
+      <h3>Total Students</h3>
+      <div class="stat-value">{{ total_students }}</div>
+    </div>
   </div>
   <div class="stat-card">
     <div class="stat-icon success">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+        />
+      </svg>
     </div>
-    <div class="stat-info"><h3>Active Quizzes</h3><div class="stat-value">{{ active_quizzes }}<span style="font-size:1rem;color:var(--text-muted);"> / {{ total_quizzes }}</span></div></div>
+    <div class="stat-info">
+      <h3>Active Quizzes</h3>
+      <div class="stat-value">
+        {{ active_quizzes }}<span
+          style="font-size: 1rem; color: var(--text-muted)"
+        >
+          / {{ total_quizzes }}</span
+        >
+      </div>
+    </div>
   </div>
   <div class="stat-card">
     <div class="stat-icon warning">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138"/></svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138"
+        />
+      </svg>
     </div>
-    <div class="stat-info"><h3>Total Attempts</h3><div class="stat-value">{{ total_attempts }}</div></div>
+    <div class="stat-info">
+      <h3>Total Attempts</h3>
+      <div class="stat-value">{{ total_attempts }}</div>
+    </div>
   </div>
   <div class="stat-card">
     <div class="stat-icon info">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"
+        />
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"
+        />
+      </svg>
     </div>
-    <div class="stat-info"><h3>Platform Avg Score</h3><div class="stat-value">{{ avg_pct }}<span style="font-size:1.1rem;">%</span></div></div>
+    <div class="stat-info">
+      <h3>Platform Avg Score</h3>
+      <div class="stat-value">
+        {{ avg_pct }}<span style="font-size: 1.1rem">%</span>
+      </div>
+    </div>
   </div>
 </div>
 
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px;">
+<!-- CHARTS ROW -->
+<div
+  style="
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  "
+>
+  <!-- TOP PERFORMERS CHART -->
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">🏆 Top Performers</h2>
+    </div>
+    <div style="padding: 16px; position: relative; height: 260px">
+      <canvas id="performersChart"></canvas>
+    </div>
+  </div>
 
-  <!-- TOP PERFORMERS -->
+  <!-- SUBJECT DISTRIBUTION CHART -->
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">📚 Quizzes by Subject</h2>
+    </div>
+    <div style="padding: 16px; position: relative; height: 260px">
+      <canvas id="subjectChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ PERFORMANCE CHART -->
+<div class="card" style="margin-bottom: 24px">
+  <div class="card-header">
+    <h2 class="card-title">📊 Quiz Average Scores</h2>
+    <span class="badge badge-primary">All quizzes</span>
+  </div>
+  <div style="padding: 16px; position: relative; height: 300px">
+    <canvas id="quizScoresChart"></canvas>
+  </div>
+</div>
+
+<div
+  style="
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  "
+>
+  <!-- TOP PERFORMERS TABLE -->
   <div class="card">
     <div class="card-header">
       <h2 class="card-title">🏆 Top Performers</h2>
@@ -45,16 +165,26 @@
     <div class="table-wrap">
       <table class="data-table">
         <thead>
-          <tr><th>#</th><th>Student</th><th>Quizzes</th><th class="td-center">Avg Score</th></tr>
+          <tr>
+            <th>#</th>
+            <th>Student</th>
+            <th>Quizzes</th>
+            <th class="td-center">Avg Score</th>
+          </tr>
         </thead>
         <tbody>
           {% for item in top_performers %}
           <tr>
             <td class="text-muted">
-              {% if forloop.counter == 1 %}🥇{% elif forloop.counter == 2 %}🥈{% elif forloop.counter == 3 %}🥉{% else %}#{{ forloop.counter }}{% endif %}
+              {% if forloop.counter == 1 %}🥇{% elif forloop.counter == 2 %}🥈{%
+              elif forloop.counter == 3 %}🥉{% else %}#{{ forloop.counter }}{%
+              endif %}
             </td>
             <td class="td-primary">
-              <a href="{% url 'admin_student_detail' item.student.id %}" style="color:var(--primary);">
+              <a
+                href="{% url 'admin_student_detail' item.student.id %}"
+                style="color: var(--primary)"
+              >
                 {{ item.student.first_name|default:item.student.username }}
               </a>
             </td>
@@ -62,7 +192,18 @@
             <td class="td-center fw-600 text-primary-c">{{ item.avg_pct }}%</td>
           </tr>
           {% empty %}
-          <tr><td colspan="4" style="padding:20px;text-align:center;color:var(--text-muted);">No attempts yet.</td></tr>
+          <tr>
+            <td
+              colspan="4"
+              style="
+                padding: 20px;
+                text-align: center;
+                color: var(--text-muted);
+              "
+            >
+              No attempts yet.
+            </td>
+          </tr>
           {% endfor %}
         </tbody>
       </table>
@@ -78,23 +219,47 @@
     <div class="table-wrap">
       <table class="data-table">
         <thead>
-          <tr><th>Question</th><th class="td-center">Attempts</th><th class="td-center">Correct Rate</th></tr>
+          <tr>
+            <th>Question</th>
+            <th class="td-center">Attempts</th>
+            <th class="td-center">Correct Rate</th>
+          </tr>
         </thead>
         <tbody>
           {% for item in hardest_questions %}
           <tr>
-            <td style="max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+            <td
+              style="
+                max-width: 260px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              "
+            >
               {{ item.question.question_text|truncatechars:60 }}
             </td>
             <td class="td-center">{{ item.total }}</td>
             <td class="td-center">
-              <span class="badge {% if item.rate < 30 %}badge-danger{% elif item.rate < 60 %}badge-warning{% else %}badge-success{% endif %}">
+              <span
+                class="badge {% if item.rate < 30 %}badge-danger{% elif item.rate < 60 %}badge-warning{% else %}badge-success{% endif %}"
+              >
                 {{ item.rate }}%
               </span>
             </td>
           </tr>
           {% empty %}
-          <tr><td colspan="3" style="padding:20px;text-align:center;color:var(--text-muted);">Not enough data yet.</td></tr>
+          <tr>
+            <td
+              colspan="3"
+              style="
+                padding: 20px;
+                text-align: center;
+                color: var(--text-muted);
+              "
+            >
+              Not enough data yet.
+            </td>
+          </tr>
           {% endfor %}
         </tbody>
       </table>
@@ -103,14 +268,20 @@
 </div>
 
 <!-- QUIZ PERFORMANCE TABLE -->
-<div class="card">
+<div class="card" style="margin-bottom: 24px">
   <div class="card-header">
     <h2 class="card-title">Quiz Performance Summary</h2>
   </div>
   <div class="table-wrap">
     <table class="data-table">
       <thead>
-        <tr><th>Quiz</th><th>Subject</th><th>Status</th><th class="td-center">Attempts</th><th class="td-center">Avg Score %</th></tr>
+        <tr>
+          <th>Quiz</th>
+          <th>Subject</th>
+          <th>Status</th>
+          <th class="td-center">Attempts</th>
+          <th class="td-center">Avg Score %</th>
+        </tr>
       </thead>
       <tbody>
         {% for item in quiz_stats %}
@@ -119,45 +290,166 @@
           <td>{{ item.quiz.subject.name }}</td>
           <td>
             {% if item.quiz.is_active %}
-              <span class="badge badge-success">Active</span>
+            <span class="badge badge-success">Active</span>
             {% else %}
-              <span class="badge badge-warning">Inactive</span>
+            <span class="badge badge-warning">Inactive</span>
             {% endif %}
           </td>
           <td class="td-center">{{ item.attempts }}</td>
           <td class="td-center fw-600">
-            <span class="{% if item.avg_pct >= 70 %}text-success{% elif item.avg_pct >= 40 %}text-primary-c{% else %}text-danger{% endif %}">
+            <span
+              class="{% if item.avg_pct >= 70 %}text-success{% elif item.avg_pct >= 40 %}text-primary-c{% else %}text-danger{% endif %}"
+            >
               {{ item.avg_pct }}%
             </span>
           </td>
         </tr>
         {% empty %}
-        <tr><td colspan="5" style="padding:20px;text-align:center;color:var(--text-muted);">No quizzes found.</td></tr>
+        <tr>
+          <td
+            colspan="5"
+            style="padding: 20px; text-align: center; color: var(--text-muted)"
+          >
+            No quizzes found.
+          </td>
+        </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
 </div>
 
-<!-- SUBJECT BREAKDOWN -->
+<!-- SUBJECT BREAKDOWN TABLE -->
 <div class="card mt-4">
   <div class="card-header"><h2 class="card-title">Subject Overview</h2></div>
   <div class="table-wrap">
     <table class="data-table">
       <thead>
-        <tr><th>Subject</th><th class="td-center">Quizzes</th></tr>
+        <tr>
+          <th>Subject</th>
+          <th class="td-center">Quizzes</th>
+        </tr>
       </thead>
       <tbody>
         {% for subj in subjects %}
         <tr>
           <td class="td-primary">{{ subj.name }}</td>
-          <td class="td-center"><span class="badge badge-primary">{{ subj.quiz_count }}</span></td>
+          <td class="td-center">
+            <span class="badge badge-primary">{{ subj.quiz_count }}</span>
+          </td>
         </tr>
         {% empty %}
-        <tr><td colspan="2" style="padding:20px;text-align:center;color:var(--text-muted);">No subjects found.</td></tr>
+        <tr>
+          <td
+            colspan="2"
+            style="padding: 20px; text-align: center; color: var(--text-muted)"
+          >
+            No subjects found.
+          </td>
+        </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
 </div>
+
+{% endblock %} {% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+  Chart.defaults.font.family = 'Inter, system-ui, sans-serif';
+  Chart.defaults.color = '#64748b';
+
+  const primaryColor = '#2563EB';
+  const colors = [
+    '#2563EB','#7c3aed','#059669','#d97706','#dc2626',
+    '#0891b2','#65a30d','#9333ea','#ea580c','#0284c7',
+    '#16a34a','#ca8a04','#e11d48'
+  ];
+
+  // ── TOP PERFORMERS BAR CHART ─────────────────────────
+  const performersCtx = document.getElementById('performersChart').getContext('2d');
+  new Chart(performersCtx, {
+    type: 'bar',
+    data: {
+      labels: [{% for item in top_performers %}'{{ item.student.first_name|default:item.student.username }}'{% if not forloop.last %},{% endif %}{% endfor %}],
+      datasets: [{
+        label: 'Avg Score %',
+        data: [{% for item in top_performers %}{{ item.avg_pct }}{% if not forloop.last %},{% endif %}{% endfor %}],
+        backgroundColor: colors.slice(0, {{ top_performers|length }}),
+        borderRadius: 8,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.y}%` } }
+      },
+      scales: {
+        y: { beginAtZero: true, max: 100, grid: { color: '#f1f5f9' }, ticks: { callback: v => v + '%' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  // ── SUBJECT DOUGHNUT CHART ───────────────────────────
+  const subjectCtx = document.getElementById('subjectChart').getContext('2d');
+  new Chart(subjectCtx, {
+    type: 'doughnut',
+    data: {
+      labels: [{% for subj in subjects %}'{{ subj.name }}'{% if not forloop.last %},{% endif %}{% endfor %}],
+      datasets: [{
+        data: [{% for subj in subjects %}{{ subj.quiz_count }}{% if not forloop.last %},{% endif %}{% endfor %}],
+        backgroundColor: colors,
+        borderWidth: 2,
+        borderColor: '#fff',
+        hoverOffset: 8,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'right', labels: { boxWidth: 12, padding: 10, font: { size: 11 } } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} quiz${ctx.parsed !== 1 ? 'zes' : ''}` } }
+      },
+      cutout: '65%',
+    }
+  });
+
+  // ── QUIZ SCORES BAR CHART ────────────────────────────
+  const quizCtx = document.getElementById('quizScoresChart').getContext('2d');
+  new Chart(quizCtx, {
+    type: 'bar',
+    data: {
+      labels: [{% for item in quiz_stats %}'{{ item.quiz.title|truncatechars:20 }}'{% if not forloop.last %},{% endif %}{% endfor %}],
+      datasets: [{
+        label: 'Avg Score %',
+        data: [{% for item in quiz_stats %}{{ item.avg_pct }}{% if not forloop.last %},{% endif %}{% endfor %}],
+        backgroundColor: function(ctx) {
+          const v = ctx.parsed.y;
+          if (v >= 70) return '#059669';
+          if (v >= 40) return '#2563EB';
+          return '#dc2626';
+        },
+        borderRadius: 6,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ` Avg: ${ctx.parsed.y}%` } }
+      },
+      scales: {
+        y: { beginAtZero: true, max: 100, grid: { color: '#f1f5f9' }, ticks: { callback: v => v + '%' } },
+        x: { grid: { display: false }, ticks: { maxRotation: 45, font: { size: 10 } } }
+      }
+    }
+  });
+</script>
 {% endblock %}
