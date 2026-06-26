@@ -812,10 +812,7 @@ ol {
 }
 
 /* ---- RESPONSIVE ---- */
-@media (max-width: 768px) {
-  .sidebar {
-    display: none;
-  }
+
   .page-body {
     padding: 20px 16px;
   }
@@ -1005,12 +1002,33 @@ ol {
   z-index: 99;
 }
 
+/* ---- HAMBURGER MENU ---- */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: var(--text-primary);
+}
+
+.hamburger svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.hamburger:hover {
+  color: var(--primary);
+}
+
 @media (max-width: 768px) {
   .hamburger {
     display: flex;
     align-items: center;
     justify-content: center;
   }
+}
   .sidebar {
     display: flex !important;
     position: fixed;
