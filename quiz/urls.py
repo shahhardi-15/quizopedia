@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     # Home
     path('', views.home_view, name='home'),
+    path('bulk-import/', views.bulk_import_students, name='bulk_import_students'),
 
     # Admin Auth
     path('admin_login/', views.LoginUserView, name='sign1'),
