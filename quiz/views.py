@@ -219,24 +219,6 @@ def add_student(request):
                 msg = f"Student '{name}' registered successfully!"
                 msg_type = 'success'
 
-                try:
-                    from django.core.mail import send_mail
-                    send_mail(
-                        subject='Welcome to Quizopedia!',
-                        message=(
-                            f"Hi {name},\n\n"
-                            f"Your Quizopedia account has been created.\n\n"
-                            f"Login Email: {email}\n"
-                            f"Enrollment No: {enrollment_no}\n\n"
-                            f"You can log in here: https://quizopedia-7jq4.onrender.com/login/\n\n"
-                            f"Best regards,\nQuizopedia Team"
-                        ),
-                        from_email=None,
-                        recipient_list=[email],
-                        fail_silently=True,
-                    )
-                except Exception:
-                    pass
             except Exception as e:
                 msg = f"Error creating student: {str(e)}"
 
