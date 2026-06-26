@@ -218,6 +218,25 @@ def add_student(request):
                 )
                 msg = f"Student '{name}' registered successfully!"
                 msg_type = 'success'
+
+                try:
+                    from django.core.mail import send_mail
+                    send_mail(
+                        subject='Welcome to Quizopedia!',
+                        message=(
+                            f"Hi {name},\n\n"
+                            f"Your Quizopedia account has been created.\n\n"
+                            f"Login Email: {email}\n"
+                            f"Enrollment No: {enrollment_no}\n\n"
+                            f"You can log in here: https://quizopedia-7jq4.onrender.com/login/\n\n"
+                            f"Best regards,\nQuizopedia Team"
+                        ),
+                        from_email=None,
+                        recipient_list=[email],
+                        fail_silently=True,
+                    )
+                except Exception:
+                    pass
             except Exception as e:
                 msg = f"Error creating student: {str(e)}"
 
@@ -251,79 +270,6 @@ def admin_student_detail(request, student_id):
     }
     return render(request, 'admin_student_detail.html', context)
 
-@login_required(login_url='sign1')
-def bulk_import_students(request):
-    if request.user.user_type != 'admin':
-        return redirect('sign1')
-
-    if request.method == 'POST' and request.FILES.get('csv_file'):
-        import csv
-        import io
-
-        csv_file = request.FILES['csv_file']
-        if not csv_file.name.endswith('.csv'):
-            return render(request, 'Add_student.html', {'s': 'Please upload a valid CSV file.', 'msg_type': 'danger'})
-
-        decoded = csv_file.read().decode('utf-8')
-        reader = csv.DictReader(io.StringIO(decoded))
-
-        success_count = 0
-        errors = []
-
-        for i, row in enumerate(reader, start=2):
-            try:
-                name = row.get('name', '').strip()
-                email = row.get('email', '').strip()
-                password = row.get('password', '').strip()
-                enrollment_no = row.get('enrollment_no', '').strip()
-                branch = row.get('branch', '').strip()
-                proctor = row.get('proctor', '').strip()
-                attendance = int(row.get('attendance', 0) or 0)
-                cgpa = float(row.get('cgpa', 0.0) or 0.0)
-
-                if not all([name, email, password, enrollment_no]):
-                    errors.append(f"Row {i}: Missing required fields.")
-                    continue
-                if CustomUser.objects.filter(email=email).exists():
-                    errors.append(f"Row {i}: Email '{email}' already exists.")
-                    continue
-                if CustomUser.objects.filter(enrollment_no=enrollment_no).exists():
-                    errors.append(f"Row {i}: Enrollment '{enrollment_no}' already exists.")
-                    continue
-
-                CustomUser.objects.create_user(
-                    username=enrollment_no,
-                    email=email,
-                    password=password,
-                    user_type='student',
-                    first_name=name,
-                    enrollment_no=enrollment_no,
-                    branch=branch,
-                    proctor=proctor,
-                    attendance=attendance,
-                    cgpa=cgpa,
-                )
-                success_count += 1
-            except Exception as e:
-                errors.append(f"Row {i}: {str(e)}")
-
-        msg = f"{success_count} student(s) imported successfully."
-        if errors:
-            msg += f" {len(errors)} error(s): " + " | ".join(errors[:3])
-        msg_type = 'success' if success_count > 0 else 'danger'
-        return render(request, 'Add_student.html', {'s': msg, 'msg_type': msg_type})
-
-    # Download blank CSV template
-    if request.method == 'GET' and request.GET.get('download_template'):
-        import csv
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="student_import_template.csv"'
-        writer = csv.writer(response)
-        writer.writerow(['name', 'email', 'password', 'enrollment_no', 'branch', 'proctor', 'attendance', 'cgpa'])
-        writer.writerow(['John Doe', 'john@example.com', 'password123', 'EN21CS001', 'Computer Science', 'Prof. Sharma', '90', '8.5'])
-        return response
-
-    return redirect('addstudent')
 
 @login_required(login_url='sign1')
 def student_report(request):
@@ -439,7 +385,7 @@ def download_report(request, student_id):
     filename = f"{student_name}_report.pdf"
     response = HttpResponse(buffer, content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="{filename}"'
-    return response
+    return responsess
 # ============================================================
 # ADMIN QUIZ MANAGEMENT
 # ============================================================

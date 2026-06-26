@@ -105,6 +105,15 @@ AUTHENTICATION_BACKENDS = [
     'quiz.backends.CustomAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+# Email configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = f'Quizopedia <{EMAIL_HOST_USER}>'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
