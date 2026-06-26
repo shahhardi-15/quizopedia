@@ -366,7 +366,7 @@ def download_report(request, student_id):
     filename = f"{student_name}_report.pdf"
     response = HttpResponse(buffer, content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="{filename}"'
-    return responses
+    return response
 # ============================================================
 # ADMIN QUIZ MANAGEMENT
 # ============================================================
