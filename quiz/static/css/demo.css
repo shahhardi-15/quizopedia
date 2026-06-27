@@ -896,8 +896,9 @@ ol {
   .sidebar {
     display: flex !important;
     position: fixed;
-    left: -280px;
+    left: -260px;
     top: 0;
+    width: 260px;
     height: 100vh;
     min-height: 100vh;
     transition: left 0.3s ease;
