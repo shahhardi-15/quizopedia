@@ -855,30 +855,24 @@ ol {
   .auth-card {
     padding: 28px 20px;
   }
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
-@media (max-width: 420px) {
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ---- MOBILE FIXES ---- */
 @media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .top-bar {
     padding: 0 16px;
     gap: 8px;
-    flex-wrap: nowrap;
   }
   .top-bar-title {
     font-size: 0.95rem;
     white-space: nowrap;
   }
-  .top-bar-actions span {
-    font-size: 0.75rem;
+  .page-body {
+    padding: 16px;
   }
   .stats-grid {
     grid-template-columns: 1fr 1fr;
@@ -890,49 +884,28 @@ ol {
   .stat-info .stat-value {
     font-size: 1.5rem;
   }
-  .page-body {
-    padding: 16px;
-  }
   .sidebar {
-    display: flex !important;
-    position: fixed;
-    left: -260px;
-    top: 0;
-    width: 260px;
-    height: 100vh;
-    min-height: 100vh;
-    transition: left 0.3s ease;
-    z-index: 200;
+    position: fixed !important;
+    left: -260px !important;
+    top: 0 !important;
+    width: 260px !important;
+    height: 100vh !important;
+    background: #ffffff !important;
+    z-index: 200 !important;
+    transition: left 0.3s ease !important;
   }
   .sidebar.open {
-    left: 0;
-  }
-  .hamburger {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    left: 0 !important;
   }
   .sidebar-overlay.open {
     display: block;
   }
-  #sidebar-close {
-    display: flex !important;
-  }
   .sidebar-close-btn {
-    display: none;
+    display: block;
     background: none;
     border: none;
     cursor: pointer;
-    color: var(--sidebar-text);
-    padding: 8px 16px;
-    margin: 4px 8px;
-  }
-  .sidebar-close-btn {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--sidebar-text);
+    color: #0f172a;
     padding: 8px 16px;
     margin: 4px 8px;
   }
@@ -940,10 +913,26 @@ ol {
     width: 20px;
     height: 20px;
   }
-
-  @media (max-width: 768px) {
-    .sidebar-close-btn {
-      display: block;
-    }
+  .sidebar .brand-name,
+  .sidebar .sidebar-section-label,
+  .sidebar .nav-link,
+  .sidebar .user-name,
+  .sidebar .user-role {
+    color: #0f172a !important;
+  }
+  .sidebar .nav-link:hover {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+  }
+  .sidebar .nav-link.active {
+    background: rgba(99, 102, 241, 0.1) !important;
+    color: #6366f1 !important;
+  }
+  .sidebar-user {
+    background: rgba(0, 0, 0, 0.05) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+  }
+  .sidebar-footer {
+    border-top-color: rgba(0, 0, 0, 0.1) !important;
   }
 }
