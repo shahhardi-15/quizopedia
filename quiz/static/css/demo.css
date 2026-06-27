@@ -935,4 +935,23 @@ ol {
   .sidebar-footer {
     border-top-color: rgba(0, 0, 0, 0.1) !important;
   }
+  @media (min-width: 769px) {
+    .sidebar {
+      position: sticky !important;
+      left: auto !important;
+      top: 0 !important;
+      width: 260px !important;
+      height: 100vh !important;
+      z-index: 100 !important;
+    }
+    .sidebar-overlay {
+      display: none !important;
+    }
+    .sidebar-close-btn {
+      display: none !important;
+    }
+    .hamburger {
+      display: none !important;
+    }
+  }
 }

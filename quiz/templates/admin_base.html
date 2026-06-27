@@ -7,20 +7,6 @@
     <title>{% block title %}Admin — Quiz Academy{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/demo.css' %}" />
     {% block extra_head %}{% endblock %}
-    <style>
-@media (max-width: 768px) {
-  .hamburger { display: flex !important; align-items: center; justify-content: center; }
-  .sidebar { position: fixed !important; left: -260px !important; top: 0 !important; width: 260px !important; height: 100vh !important; background: #fff !important; z-index: 200 !important; transition: left 0.3s ease !important; }
-  .sidebar.open { left: 0 !important; }
-  .sidebar-overlay.open { display: block !important; }
-  .sidebar-close-btn { display: block !important; }
-  .sidebar .nav-link, .sidebar .user-name, .sidebar .brand-name, .sidebar .sidebar-section-label { color: #0f172a !important; }
-  .sidebar .nav-link:hover { background: #f1f5f9 !important; }
-  .page-body { padding: 16px !important; }
-  .top-bar { padding: 0 16px !important; }
-  .stats-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
-}
-</style>
   </head>
   <body>
     <div class="app-layout">
