@@ -865,3 +865,45 @@ ol {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---- MOBILE FIXES ---- */
+@media (max-width: 768px) {
+  .top-bar {
+    padding: 0 16px;
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+  .top-bar-title {
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+  .top-bar-actions span {
+    font-size: 0.75rem;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .stat-card {
+    padding: 16px;
+  }
+  .stat-info .stat-value {
+    font-size: 1.5rem;
+  }
+  .page-body {
+    padding: 16px;
+  }
+  .sidebar {
+    display: flex !important;
+    position: fixed;
+    left: -280px;
+    top: 0;
+    height: 100vh;
+    min-height: 100vh;
+    transition: left 0.3s ease;
+    z-index: 200;
+  }
+  .sidebar.open {
+    left: 0;
+  }
+}
