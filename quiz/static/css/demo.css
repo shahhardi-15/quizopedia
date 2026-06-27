@@ -914,4 +914,7 @@ ol {
   .sidebar-overlay.open {
     display: block;
   }
+  #sidebar-close {
+    display: flex !important;
+  }
 }
