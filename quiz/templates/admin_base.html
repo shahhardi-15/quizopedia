@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Admin — Quiz Academy{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/demo.css' %}?v=4" />
+    <link rel="stylesheet" href="{% static 'css/demo.css' %}" />
     {% block extra_head %}{% endblock %}
   </head>
   <body>
@@ -292,7 +292,7 @@
     <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
     <script>
       function toggleSidebar() {
-        document.querySelector(".sidebar").classList.toggle("open");
+        document.getElementById("sidebar").classList.toggle("open");
         document.getElementById("overlay").classList.toggle("open");
       }
     </script>
