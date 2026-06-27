@@ -917,4 +917,32 @@ ol {
   #sidebar-close {
     display: flex !important;
   }
+  .sidebar-close-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--sidebar-text);
+    padding: 8px 16px;
+    margin: 4px 8px;
+  }
+  .sidebar-close-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--sidebar-text);
+    padding: 8px 16px;
+    margin: 4px 8px;
+  }
+  .sidebar-close-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .sidebar-close-btn {
+      display: block;
+    }
+  }
 }
