@@ -906,4 +906,12 @@ ol {
   .sidebar.open {
     left: 0;
   }
+  .hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sidebar-overlay.open {
+    display: block;
+  }
 }
