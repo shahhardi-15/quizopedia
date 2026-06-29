@@ -57,28 +57,30 @@
     <div class="app-layout">
       <aside class="sidebar" id="sidebar">
         <div class="sidebar-brand">
-          <img
-            src="{% static 'images/logo.png' %}"
-            alt="Quiz Academy"
-            onerror="this.style.display = 'none'"
-          />
-          <div class="brand-name">Admin Panel</div>
-        </div>
-        <button class="sidebar-close-btn" onclick="toggleSidebar()">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
+          <div class="sidebar-brand-main">
+            <img
+              src="{% static 'images/logo.png' %}"
+              alt="Quiz Academy"
+              onerror="this.style.display = 'none'"
             />
-          </svg>
-        </button>
+            <div class="brand-name">Admin Panel</div>
+          </div>
+          <button class="sidebar-close-btn" onclick="toggleSidebar()">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
         <div class="sidebar-user">
           <div class="avatar">{{ request.user.username|first|upper }}</div>
           <div class="user-info">

@@ -128,9 +128,17 @@ ol {
 }
 
 .sidebar-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   position: relative;
   border-bottom: 1px solid var(--sidebar-border);
   overflow: hidden;
+}
+.sidebar-brand-main {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 .sidebar-brand img {
   width: 100%;
@@ -919,16 +927,21 @@ ol {
     display: block;
   }
   .sidebar-close-btn {
-    display: block;
-    position: absolute;
-    right: 12px;
-    top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: static;
+    right: auto;
+    top: auto;
+    transform: none;
     background: transparent;
     border: none;
     cursor: pointer;
     color: #0f172a;
     padding: 6px;
     margin: 0;
+    margin-left: auto;
+    flex-shrink: 0;
   }
   .sidebar-close-btn svg {
     width: 20px;
