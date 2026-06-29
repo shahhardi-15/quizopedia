@@ -176,9 +176,7 @@ nav_analytics %}active{% endblock %} {% block content %}
           {% for item in top_performers %}
           <tr>
             <td class="text-muted">
-              {% if forloop.counter == 1 %}🥇{% elif forloop.counter == 2 %}🥈{%
-              elif forloop.counter == 3 %}🥉{% else %}#{{ forloop.counter }}{%
-              endif %}
+              {% if forloop.counter == 1 %}1st{% elif forloop.counter == 2 %}2nd{% elif forloop.counter == 3 %}3rd{% else %}#{{ forloop.counter }}{% endif %}
             </td>
             <td class="td-primary">
               <a
