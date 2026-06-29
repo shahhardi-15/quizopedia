@@ -11,19 +11,14 @@
   <body>
     <div class="app-layout">
       <aside class="sidebar" id="sidebar">
-        <div class="sidebar-brand">
-          <img
-            src="{% static 'images/logo.png' %}"
-            alt="Quiz Academy"
-            onerror="this.style.display = 'none'"
-          />
-          <div class="brand-name">Student Portal</div>
-        </div>
         <div class="sidebar-user">
           <div class="avatar">{{ request.user.username|first|upper }}</div>
           <div class="user-info">
-            <div class="user-name">
-              {{ request.user.first_name|default:request.user.username }}
+            <div class="user-title-row">
+              <div class="user-name">
+                {{ request.user.first_name|default:request.user.username }}
+              </div>
+              <div class="portal-label">Student Portal</div>
             </div>
             <div class="user-role">
               {{ request.user.enrollment_no|default:"Student" }}
