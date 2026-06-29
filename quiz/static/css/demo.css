@@ -917,8 +917,8 @@ ol {
     top: 0 !important;
     bottom: 0 !important;
     width: 260px !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
     background: #ffffff !important;
     z-index: 200 !important;
     transition: left 0.3s ease !important;
