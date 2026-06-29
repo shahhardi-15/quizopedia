@@ -114,7 +114,8 @@ ol {
   flex-shrink: 0;
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none;
@@ -914,8 +915,10 @@ ol {
     position: fixed !important;
     left: -260px !important;
     top: 0 !important;
+    bottom: 0 !important;
     width: 260px !important;
     height: 100vh !important;
+    min-height: 100vh !important;
     background: #ffffff !important;
     z-index: 200 !important;
     transition: left 0.3s ease !important;
@@ -983,7 +986,8 @@ ol {
     width: 260px !important;
     max-width: 260px !important;
     flex: 0 0 260px !important;
-    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 100vh !important;
     z-index: 100 !important;
   }
   .main-content {
