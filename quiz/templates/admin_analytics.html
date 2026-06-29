@@ -1,6 +1,8 @@
-{% extends 'admin_base.html' %} {% block title %}Analytics – Quiz Academy{%
-endblock %} {% block page_title %}Analytics Dashboard{% endblock %} {% block
-nav_analytics %}active{% endblock %} {% block content %}
+{% extends 'admin_base.html' %}
+{% block title %}Analytics – Quiz Academy{% endblock %}
+{% block page_title %}Analytics Dashboard{% endblock %}
+{% block nav_analytics %}active{% endblock %}
+{% block content %}
 <h1 class="page-heading">Analytics Dashboard</h1>
 <p class="page-subheading">
   Performance overview across all students and quizzes.
@@ -176,9 +178,7 @@ nav_analytics %}active{% endblock %} {% block content %}
           {% for item in top_performers %}
           <tr>
             <td class="text-muted">
-              {% if forloop.counter == 1 %}🥇{% elif forloop.counter == 2 %}🥈{%
-              elif forloop.counter == 3 %}🥉{% else %}#{{ forloop.counter }}{%
-              endif %}
+              {% if forloop.counter == 1 %}🥇{% elif forloop.counter == 2 %}🥈{% elif forloop.counter == 3 %}🥉{% else %}#{{ forloop.counter }}{% endif %}
             </td>
             <td class="td-primary">
               <a
