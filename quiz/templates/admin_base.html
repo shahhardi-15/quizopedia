@@ -5,7 +5,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Admin — Quiz Academy{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/demo.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/demo.css' %}?v=20260629-3" />
+    <style>
+      @media (min-width: 769px) {
+        .app-layout {
+          display: flex !important;
+          align-items: stretch !important;
+        }
+        .sidebar {
+          width: 260px !important;
+          max-width: 260px !important;
+          flex: 0 0 260px !important;
+          display: flex !important;
+          flex-direction: column !important;
+          overflow-x: hidden !important;
+        }
+        .sidebar > * {
+          width: 100% !important;
+        }
+        .sidebar-brand {
+          overflow: hidden !important;
+        }
+        .sidebar-brand img {
+          display: block !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          height: 36px !important;
+          max-height: 36px !important;
+          object-fit: contain !important;
+        }
+        .sidebar-nav {
+          display: flex !important;
+          flex-direction: column !important;
+          min-width: 0 !important;
+        }
+        .sidebar-nav .nav-link {
+          display: flex !important;
+          align-items: center !important;
+          width: calc(100% - 16px) !important;
+          min-width: 0 !important;
+        }
+        .main-content {
+          flex: 1 1 auto !important;
+          min-width: 0 !important;
+        }
+      }
+    </style>
     {% block extra_head %}{% endblock %}
   </head>
   <body>
